@@ -41,7 +41,7 @@ dnf search nginx
 sudo dnf install nginx -y
 #Generate root ca certs
 openssl genpkey -algorithm RSA -out ca.key
-openssl req -x509 -new -nodes -key ca.key -sha256 -days 365 -out ca.crt -subj "/C=US/ST=Example/L=City/O=Company/OU=IT/CN=RootCA"
+openssl req -x509 -new -nodes -key ca.key -sha256 -days 365 -out ca.crt -subj "/C=US/ST=Example/L=City/O=Company/OU=IT/CN=server.local"
 #Generate certs
 openssl genpkey -algorithm RSA -out server.key
 openssl req -new -key server.key -out server.csr -subj "/C=US/ST=Example/L=City/O=Company/OU=IT/CN=server.local"
@@ -55,7 +55,7 @@ sudo cp ca.crt /etc/nginx/ssl/ca.crt
 sudo cat <<EOF >/etc/nginx/conf.d/gitea.conf
 server {
   listen 443 ssl;
-  server_name server.local www.server.local 127.0.0.1;
+  server_name server.local;
 
   ssl_certificate /etc/nginx/ssl/server.crt;
   ssl_certificate_key /etc/nginx/ssl/server.key;

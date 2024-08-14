@@ -1,8 +1,3 @@
-variable "public_key" {
-  type        = string
-  description = "Public key for EC2 instance"
-}
-
 variable "cidr_public_subnet" {
   type        = list(string)
   description = "Public subnets"
