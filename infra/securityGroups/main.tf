@@ -37,13 +37,13 @@ resource "aws_vpc_security_group_ingress_rule" "ec2HTTPS" {
   to_port           = 443
 }
 
-# resource "aws_vpc_security_group_ingress_rule" "ec2WebApp" {
-#   security_group_id = aws_security_group.webAppSecurityGroup.id
-#   cidr_ipv4         = "0.0.0.0/0"
-#   from_port         = 3000
-#   ip_protocol       = "tcp"
-#   to_port           = 3000
-# }
+resource "aws_vpc_security_group_ingress_rule" "ec2WebApp" {
+  security_group_id = aws_security_group.webAppSecurityGroup.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 3000
+  ip_protocol       = "tcp"
+  to_port           = 3000
+}
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   security_group_id = aws_security_group.webAppSecurityGroup.id

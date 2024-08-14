@@ -4,7 +4,7 @@ variable "webAppSubnetId" {}
 variable "public_key" {}
 
 resource "aws_instance" "webAppEc2Instance" {
-  ami           = "ami-0e872aee57663ae2d"
+  ami           = "ami-00060fac2f8c42d30"
   instance_type = "t2.micro"
   key_name      = "terraform_key"
   associate_public_ip_address = true

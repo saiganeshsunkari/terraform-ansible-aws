@@ -11,10 +11,28 @@ sudo chmod -R 750 /var/lib/gitea/
 sudo mkdir -p /etc/gitea
 sudo chown root:git /etc/gitea
 sudo chmod 770 /etc/gitea
-git clone https://github.com/saiganeshsunkari/terraform-ansible-aws.git
-sleep 20
-sudo cd terraform-ansible-aws/configuration
-sudo cp gitea.service /etc/systemd/system/
+sudo cat <<EOF >/etc/systemd/system/gitea.service
+[Unit]
+Description=Gitea
+After=syslog.target
+After=network.target
+After=mysqld.service
+After=postgresql.service
+After=memcached.service
+After=redis.service
+
+[Service]
+User=git
+Group=git
+WorkingDirectory=/var/lib/gitea/
+RuntimeDirectory=gitea
+ExecStart=/usr/local/bin/gitea web --config /etc/gitea/app.ini
+Restart=always
+Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/gitea
+
+[Install]
+WantedBy=multi-user.target
+EOF
 sudo systemctl daemon-reload
 sudo systemctl start gitea
 sudo systemctl enable gitea
@@ -34,7 +52,25 @@ sudo cp server.crt /etc/nginx/ssl/server.crt
 sudo cp server.key /etc/nginx/ssl/server.key
 sudo cp ca.crt /etc/nginx/ssl/ca.crt
 #Copy nginx conf
-sudo cp gitea.conf /etc/nginx/conf.d/
+sudo cat <<EOF >/etc/nginx/conf.d/gitea.conf
+server {
+  listen 443 ssl;
+  server_name server.local www.server.local 127.0.0.1;
+
+  ssl_certificate /etc/nginx/ssl/server.crt;
+  ssl_certificate_key /etc/nginx/ssl/server.key;
+  ssl_client_certificate /etc/nginx/ssl/ca.crt;
+  ssl_verify_client on;
+
+  location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_set_header Host \$host;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+  }
+}
+EOF
 #Enable and start nginx
 sudo systemctl enable nginx
 sudo systemctl start nginx

@@ -11,9 +11,9 @@ module "security_group" {
 }
 
 module "ec2" {
-  source                       = "./ec2"
-  public_key                   = var.public_key
-  webAppSgId                   = module.security_group.webAppSecurityGroupId
-  webAppSubnetId               = tolist(module.networking.webAppPublicSubnetId)[0]
+  source                        = "./ec2"
+  public_key                    = var.public_key
+  webAppSgId                    = module.security_group.webAppSecurityGroupId
+  webAppSubnetId                = tolist(module.networking.webAppPublicSubnetId)[0]
   user_data_install_gitea_nginx = templatefile("./template/ec2_gitea_nginx.sh", {})
 }
