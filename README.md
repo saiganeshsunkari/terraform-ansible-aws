@@ -376,3 +376,6 @@ curl --key client.key  --cert client.crt --cacert ca.crt https://ec2-18-194-15-2
 ```
 
 Below is the screenshot of the same after the above command is executed we can see in the output that the tls handshake is successfull.
+
+<img width="1469" alt="Screenshot 2024-08-15 at 5 19 23 PM" src="https://github.com/user-attachments/assets/bd7fe29d-c32b-4bb3-b80c-625f92a60461">
+
