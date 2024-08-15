@@ -379,3 +379,8 @@ Below is the screenshot of the same after the above command is executed we can s
 
 <img width="1469" alt="Screenshot 2024-08-15 at 5 19 23 PM" src="https://github.com/user-attachments/assets/bd7fe29d-c32b-4bb3-b80c-625f92a60461">
 
+Below is the architecture diagram for this usecase.
+
+![Blank diagram](https://github.com/user-attachments/assets/64cf3770-3a8b-468c-8adf-c482550f1155)
+
+
