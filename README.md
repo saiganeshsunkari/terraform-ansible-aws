@@ -1,5 +1,5 @@
 
-# Secure a Dummy Gitea with Mutual TLS Using Infrastructure as Code (IaC)
+# Secure Gitea application with Mutual TLS Using Infrastructure as Code (IaC)
 
 The objective is to set up Gitea application on an AWS instance using mutual TLS (mTLS) for authentication and secure the entire infrastructure using Infrastructure as Code (IaC) tools like Terraform,Ansible.
 
