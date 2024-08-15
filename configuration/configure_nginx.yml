@@ -1,0 +1,26 @@
+---
+
+- hosts: localhost
+  remote_user: ec2-user
+  vars:
+    - ansible_ssh_private_key_file: "~/workspace/terraform/terraform-ansible-aws/infra/terraform_ec2_key"
+
+  tasks:
+    - name: Configure nginx server
+      delegate_to: "ec2-18-194-15-21.eu-central-1.compute.amazonaws.com"
+      become: true
+      block:
+        - name: Copy script
+          copy:
+            src: configure_nginx.sh
+            dest: /tmp/configure_nginx.sh
+            mode: 0755
+
+        - name: Run shell script on remote server
+          shell: sh /tmp/configure_nginx.sh
+
+
+
+
+
+
